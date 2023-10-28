@@ -95,14 +95,17 @@ class Game:
         self.player_cash = int(input("Enter the amount of cash you have: "))
         game_number = 0
         games_to_play = 0
-        while games_to_play < 1:
+        while games_to_play < 1 or games_to_play > 100:
             try:
                 games_to_play = int(input(
-                    "Enter the number of games you want to play: "))
+                    "Enter the number of games you want to play 1-100: "))
             except:
-                print("Please enter a positive integer !")
+                print("Please enter a positive integer from 1 to 100 !")
 
         while game_number < games_to_play:
+            if self.player_cash < 1:
+                print("You don't have enough cash to play !")
+                break
             game_number += 1
             player_bet = 0
             while player_bet < 1 or player_bet > self.player_cash:
@@ -199,12 +202,12 @@ class Game:
                 print("Both players have the same score, it's a tie!")
                 print("Your cash:", self.player_cash)
                 return True
-            elif player_hand.get_value() > dealer_hand.get_value():
+            elif player_hand.get_value() > dealer_hand.get_value() and player_hand.get_value() <= 21:
                 print("You beat the dealer, you win!")
                 self.player_cash += player_bet
                 print("Your cash:", self.player_cash)
                 return True
-            else:
+            elif dealer_hand.get_value() > player_hand.get_value() and dealer_hand.get_value() <= 21:
                 print("Dealer beat you, you lose!")
                 self.player_cash -= player_bet
                 print("Your cash:", self.player_cash)
