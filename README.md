@@ -49,6 +49,6 @@ Contributions are welcome. Please open an issue or submit a pull request.
 
 ## Contact
 
-My twitter/X - [@Ahmed_Abbas2077](https://twitter.com/Ahmed_Abbas2077)
+My Twitter/X - [@Ahmed_Abbas2077](https://twitter.com/Ahmed_Abbas2077)
 
 Project Link: [Blackjack](https://github.com/Ahmed-Abbas-2077/Blackjack)
