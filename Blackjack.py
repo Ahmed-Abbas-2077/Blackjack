@@ -139,12 +139,16 @@ class Game:
                 continue
 
             choice = ""
-            while choice not in ("S", "STAND", "H", "HIT") and player_hand.get_value() < 21:
+            while player_hand.get_value() < 21:
                 choice = input("Do you want to (H)it or (S)tand? ").upper()
 
-            if choice in ("H", "HIT"):
-                player_hand.add_card(deck.deal(1))
-                player_hand.display()
+                if choice in ("H", "HIT"):
+                    player_hand.add_card(deck.deal(1))
+                    player_hand.display()
+                elif choice in ("S", "STAND"):
+                    break
+
+                choice = ""
 
             if self.check_winner(player_hand, dealer_hand, player_bet=player_bet):
                 continue
@@ -155,19 +159,10 @@ class Game:
             while dealer_hand.get_value() < 17:
                 dealer_hand.add_card(deck.deal(1))
                 dealer_hand_value = dealer_hand.get_value()
-
             dealer_hand.display(show_all_dealer_cards=True)
 
             if self.check_winner(player_hand, dealer_hand, player_bet=player_bet, game_over=True):
                 continue
-
-            print("Final hands:")
-            print("Your hand:", player_hand_value)
-            print("Dealer's hand:", dealer_hand_value)
-            print("Your cash:", self.player_cash)
-
-            self.check_winner(player_hand, dealer_hand,
-                              player_bet=player_bet, game_over=True)
 
         print("\nThanks for playing !")
 
@@ -176,40 +171,56 @@ class Game:
             if player_hand.get_value() > 21:
                 print("You busted, you lose!")
                 self.player_cash -= player_bet
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
             elif dealer_hand.get_value() > 21:
                 print("Dealer busted, you win!")
                 self.player_cash += player_bet
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
             elif player_hand.is_blackjack() and dealer_hand.is_blackjack():
                 print("Both players have blackjack, it's a tie!")
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
             elif player_hand.is_blackjack():
                 print("You have blackjack, you win!")
                 self.player_cash += player_bet * 1.5
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
             elif dealer_hand.is_blackjack():
                 print("Dealer has blackjack, you lose!")
                 self.player_cash -= player_bet
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
         else:
             if player_hand.get_value() == dealer_hand.get_value():
                 print("Both players have the same score, it's a tie!")
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
             elif player_hand.get_value() > dealer_hand.get_value() and player_hand.get_value() <= 21:
                 print("You beat the dealer, you win!")
                 self.player_cash += player_bet
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
             elif dealer_hand.get_value() > player_hand.get_value() and dealer_hand.get_value() <= 21:
                 print("Dealer beat you, you lose!")
                 self.player_cash -= player_bet
+                print("Your hand:", player_hand.get_value())
+                print("Dealer's hand:", dealer_hand.get_value())
                 print("Your cash:", self.player_cash)
                 return True
         return False
